@@ -2,6 +2,8 @@ import express from 'express';
 
 import IssueRouter from './routes/issue-router';
 
+import DBConnection from './config/db-connection';
+
 class Application {
 
     public app: express.Application;
@@ -10,6 +12,7 @@ class Application {
         this.app =  express();
         this.setMiddlewares();
         this.setRoutes();
+        this.setDBConnection();
     }
 
     setMiddlewares(){
@@ -18,6 +21,10 @@ class Application {
 
     setRoutes(){
         this.app.use('/issues', IssueRouter);
+    }
+
+    setDBConnection(){
+        new DBConnection();
     }
 }
 

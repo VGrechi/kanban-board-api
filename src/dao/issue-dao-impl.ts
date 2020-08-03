@@ -1,12 +1,21 @@
+import mongoose, { Mongoose } from 'mongoose';
+
+
 import IssueDao from "./issue-dao";
-import Issue from "../models/issue";
+import IssueModel, { IIssue } from "../models/issue";
 
 import { PROJECT } from '../config/config';
 import StatusEnum from "../enums/status-enum";
 
 class IssueDaoImpl implements IssueDao {
 
-    private issueList: Issue[] = [{
+    //private issueModel: Issue;
+
+    /* constructor() {
+        this.issueModel = mongoose.model<Issue>('Issue');
+    } */
+
+   /*  private issueList: Issue[] = [{
         key: `${PROJECT}-1`,
         title: 'Teste',
         description: '',
@@ -17,7 +26,7 @@ class IssueDaoImpl implements IssueDao {
             { color: 'yellow', name: 'major', priority: 2 },
             { color: 'green', name: 'minor', priority: 3 },
         ]
-    }];
+    }]; */
 
     getNextKey(): string {
         this.issueList.sort((a, b) => {
@@ -28,8 +37,13 @@ class IssueDaoImpl implements IssueDao {
         return `${PROJECT}-${id + 1}`;
     }
 
-    save(issue: Issue): void {
-        this.issueList.push(issue);
+    save(issue: IIssue): Promise<IIssue> {
+        //this.issueList.push(issue);
+        IssueModel.create({
+            key: `${PROJECT}-1`,
+            title: 'Teste',
+            description: ''
+        });
     }
 
     update(issue: Issue): void {

@@ -1,15 +1,15 @@
-import Issue from "../models/issue";
+import { IIssue } from "../models/issue";
 
 interface IssueDao {
 
     getNextKey(): string;
-    save(issue: Issue): void;
-    update(issue: Issue): void;
-    findByTitle(title: string): Issue[];
-    findByLabelName(labelName: string): Issue[];
-    findByLabelPriority(labelPriority: number): Issue[];
-    findByCreationDate(creationDate: Date): Issue[];
-    findByStatus(status: string): Issue[];
+    save(issue: IIssue): Promise<IIssue>;
+    update(issue: IIssue): Promise<IIssue>;
+    findByTitle(title: string): Promise<IIssue[]>;
+    findByLabelName(labelName: string): Promise<IIssue[]>;
+    findByLabelPriority(labelPriority: number): Promise<IIssue[]>;
+    findByCreationDate(creationDate: Date): Promise<IIssue[]>;
+    findByStatus(status: string): Promise<IIssue[]>;
 
 }
 

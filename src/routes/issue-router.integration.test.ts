@@ -1,6 +1,6 @@
 import request from "supertest";
 import app from '../app';
-import Issue from "../models/issue";
+import Issue from "../dto/issue";
 import StatusEnum from "../enums/status-enum";
 
 describe('Issue Router Integration Test Suite', () => {

@@ -3,7 +3,7 @@ import IssueStatusValidator from './issue-status-validator';
 import IssueDao from '../dao/issue-dao';
 import IssueDaoImpl from '../dao/issue-dao-impl';
 import StatusEnum from '../enums/status-enum';
-import Issue from '../models/issue';
+import Issue from '../dto/issue';
 
 class IssueServiceImpl implements IssueService {
 

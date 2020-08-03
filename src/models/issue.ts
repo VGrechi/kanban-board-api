@@ -1,15 +1,27 @@
-import Label from './label';
+import mongoose, { Schema, Document } from 'mongoose';
 
-interface Issue {
-
+export interface IIssue extends Document {
     key:            string;
     title:          string;
     description:    string;
-    creationDate:   Date;
-    status:         string;
-    completionDate?: Date;
-    labels?:         Label[];
-
+    //creationDate:   Date;
+    //status:         string;
+    //completionDate?: Date;
 }
 
-export default Issue;
+const IssueSchema: Schema = new Schema({
+    key: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: false
+    }
+});
+
+export default mongoose.model<Issue>('Issue', IssueSchema);

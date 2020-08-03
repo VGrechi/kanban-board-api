@@ -1,7 +1,7 @@
 import IssueRouter from "../routes/issue-router";
 
-import Issue from '../models/issue';
-import Label from '../models/label';
+import Issue from '../dto/issue';
+import Label from '../dto/label';
 
 interface IssueService {
 
