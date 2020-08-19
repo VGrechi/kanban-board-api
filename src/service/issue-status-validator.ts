@@ -11,18 +11,18 @@ class IssueStatusValidator {
         }
 
         switch(status){
-            case StatusEnum.TO_DO.toString(): 
+            case StatusEnum.TO_DO: 
                 break;
             
-            case StatusEnum.IN_PROGRESS.toString(): 
-                if(newStatus == StatusEnum.IN_PROGRESS.toString() || newStatus == StatusEnum.TESTING.toString() || newStatus == StatusEnum.DONE.toString()){
+            case StatusEnum.IN_PROGRESS: 
+                if(newStatus == StatusEnum.IN_PROGRESS || newStatus == StatusEnum.TESTING || newStatus == StatusEnum.DONE){
                    break;
                 } else {
                     throw new Error(invalidStatusTransaction);
                 }
         
-            case StatusEnum.TESTING.toString():
-                if(newStatus == StatusEnum.TESTING.toString() || newStatus == StatusEnum.DONE.toString()){
+            case StatusEnum.TESTING:
+                if(newStatus == StatusEnum.TESTING || newStatus == StatusEnum.DONE){
                     break;
                 } else {
                     throw new Error(invalidStatusTransaction);

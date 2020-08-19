@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --ignore-watch node_modules src/server.ts",
+    "start": "ts-node-dev --ignore-watch node_modules --respawn src/server.ts",
     "test": "jest --no-cache",
-    "test-unit": "jest --no-cache -t=Unit",
-    "test-integration": "jest --no-cache -t=Integration",
-    "coverage": "jest --no-cache --coverage"
+    "test:unit": "jest --no-cache -t=Unit",
+    "test:integration": "jest src/specs/integration --runInBand --no-cache",
+    "test:coverage": "jest --no-cache --coverage"
   },
   "author": "Victor Grechi",
   "license": "ISC",
@@ -21,28 +21,18 @@
     "express": "^4.17.1",
     "jest": "^26.1.0",
     "mongoose": "^5.9.26",
+    "reflect-metadata": "^0.1.13",
     "require-dir": "^1.2.0",
     "supertest": "^4.0.2",
-    "ts-jest": "^26.1.2"
+    "ts-jest": "^26.1.2",
+    "typedi": "^0.8.0"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.2",
     "@types/express": "^4.17.7",
     "@types/node": "^14.0.23",
+    "mongodb-memory-server": "^6.6.3",
     "ts-node-dev": "^1.0.0-pre.51",
     "typescript": "^3.9.6"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.ts": "ts-jest"
-    },
-    "testRegex": "\\.test\\.ts",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
   }
 }

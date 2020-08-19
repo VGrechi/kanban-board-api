@@ -32,8 +32,8 @@ Aplicação simples desenvolvida com NodeJS e o superset TypeScript. Contém tes
 
 - **npm test** Executa todos os testes.
 
-- **npm run coverage** Eecuta todos os testes e coleta a cobertura de código.
+- **npm run test:coverage** Eecuta todos os testes e coleta a cobertura de código.
 
-- **npm run test-unit** Executa todos os testes unitários.
+- **npm run test:unit** Executa todos os testes unitários.
 
-- **npm run test-integration** Executa todos os testes de integração.
+- **npm run test:integration** Executa todos os testes de integração.

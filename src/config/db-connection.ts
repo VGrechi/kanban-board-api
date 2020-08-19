@@ -1,11 +1,17 @@
 import mongoose from 'mongoose';
-import IssueModel from '../models/issue';
 
-class DBConnection {
-    
-    constructor() {
-        mongoose.connect('mongodb://localhost:27017/kanbanboard', { useNewUrlParser: true }, () => console.log('COnectado ao mongoDB'));
-    }
+mongoose.connection.on('error',function (err) {  
+    console.log('Mongoose default connection error: ' + err);
+  });
+
+export const connect = async () => {
+    return mongoose.connect('mongodb://localhost:27017/kanbanboard', 
+    { 
+        useNewUrlParser: true,
+        useUnifiedTopology: true 
+    });
 }
 
-export default DBConnection;
+export const disconnect = async () => {
+    mongoose.disconnect();
+}

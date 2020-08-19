@@ -2,8 +2,8 @@ import request from "supertest";
 import app from '../app';
 import { mocked } from 'ts-jest/utils'
 
-jest.mock('../service/issue-service-impl');
-import IssueServiceImpl from '../service/issue-service-impl';
+import IssueServiceImpl from '../service/impl/issue-service-impl';
+import { IIssue } from "../models/issue";
 
 describe('Issue Router Unit Test Suite', () => {
     const issueMock = {
@@ -11,17 +11,15 @@ describe('Issue Router Unit Test Suite', () => {
         title: "Task for test - Update",
         description: "Mock task for test",
         creationDate: new Date(),
-        status: 'TO DO'
+        status: 'TO_DO'
     };
 
     const issuesMock = [ issueMock ];
 
     beforeAll(() => {
-        const mockedGetIssue = mocked(IssueServiceImpl.prototype.getIssue, true);
-        mockedGetIssue.mockReturnValue(issuesMock);
-
-        const mockedSaveIssue = mocked(IssueServiceImpl.prototype.saveIssue, true);
-        mockedSaveIssue.mockReturnValue(issueMock);
+        IssueServiceImpl.prototype.getIssue = jest.fn().mockImplementation(() => issuesMock);
+        IssueServiceImpl.prototype.saveIssue = jest.fn().mockImplementation(() => issueMock);
+        IssueServiceImpl.prototype.updateIssue = jest.fn().mockImplementation(() => issueMock);
     });
     
     it("[GET] /issues", async () => {
@@ -54,7 +52,7 @@ describe('Issue Router Unit Test Suite', () => {
                             .send(data)
                             .set('Content-Type', 'application/json');
 
-        expect(response.status).toBe(204);
+        expect(response.status).toBe(200);
     });
 });
 

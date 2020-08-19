@@ -1,14 +1,9 @@
-import IssueRouter from "../routes/issue-router";
+import { IIssue } from "../models/issue";
 
-import Issue from '../dto/issue';
-import Label from '../dto/label';
+export default interface IssueService {
 
-interface IssueService {
-
-    saveIssue(issue: Issue): Issue;
-    updateIssue(issue: Issue): void;
-    getIssue(title?: string, creationDate?: Date, labelName?: string, labelPriority?: number, status?: string): Issue[];
+    saveIssue(issue: IIssue): Promise<IIssue>;
+    updateIssue(issue: IIssue): Promise<IIssue>;
+    getIssue(title?: string, creationDate?: Date, labelName?: string, labelPriority?: string, status?: string): Promise<IIssue[]>;
     
 }
-
-export default IssueService;
