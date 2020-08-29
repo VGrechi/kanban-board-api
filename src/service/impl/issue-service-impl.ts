@@ -24,9 +24,12 @@ export default class IssueServiceImpl implements IssueService {
         return await this.issueDao.save(issue);
     }
 
-    async updateIssue(issue: IIssue): Promise<IIssue> {
-        let savedIssues = await this.getIssue(issue.title);
-        IssueStatusValidator.validate(savedIssues[0].status, issue.status);
+    async updateIssue(key: string, issue: IIssue): Promise<IIssue> {
+        let savedIssue = await this.getIssueByKey(key);
+        if(!savedIssue) throw Error('Issue not found');
+
+        IssueStatusValidator.validate(savedIssue.status, issue.status);
+
         if(issue.status == StatusEnum.DONE.toString()){
             issue.completionDate = new Date(); 
         }
@@ -55,7 +58,11 @@ export default class IssueServiceImpl implements IssueService {
             return await this.issueDao.findByStatus(status);
         }
         
-        return Promise.resolve([]);
+        return await this.issueDao.findAll();
+    }
+
+    async getIssueByKey(key: string): Promise<IIssue> {
+        return await this.issueDao.findByKey(key);
     }
 
     private getNextKey(key: string | undefined): string {

@@ -11,9 +11,10 @@ class IssueRouter {
         this.router = express.Router();
         this.issueController = Container.get(IssueController);
 
-        this.router.post('/', (req, res) => this.issueController.createTask(req, res))
-        this.router.put('/:key', (req, res) => this.issueController.updateTask(req, res))
-        this.router.get('/', (req, res) => this.issueController.getTasks(req, res))
+        this.router.post('/', (req, res, next) => this.issueController.createTask(req, res, next))
+        this.router.put('/:key', (req, res, next) => this.issueController.updateTask(req, res, next))
+        this.router.get('/', (req, res, next) => this.issueController.getTasks(req, res, next))
+        this.router.get('/:key', (req, res, next) => this.issueController.getTaskbyId(req, res, next))
     }
 }
 

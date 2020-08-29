@@ -13,9 +13,16 @@ class IssueDaoImpl implements IssueDao {
 
     async update(issue: IIssue): Promise<IIssue> {
         await connect();
-        issue = await IssueModel.update({ 'key': issue.key }, issue);
+        issue = await IssueModel.updateOne({ 'key': issue.key }, issue);
         disconnect();
         return issue;
+    }
+
+    async findByKey(key: string): Promise<IIssue> {
+        await connect();
+        const issues = await IssueModel.find({ 'key': key }).limit(1);
+        disconnect();
+        return issues[0];
     }
 
     async findByTitle(title: string): Promise<IIssue[]> {
@@ -58,6 +65,13 @@ class IssueDaoImpl implements IssueDao {
         const lastIssue = await IssueModel.find({}).sort({ 'key': -1 }).limit(1);
         disconnect();
         return lastIssue[0];
+    }
+
+    async findAll(): Promise<IIssue[]> {
+        await connect();
+        const lastIssues= await IssueModel.find({}).sort({ 'key': 1 });
+        disconnect();
+        return lastIssues;
     }
 
 }

@@ -1,9 +1,9 @@
 import request from "supertest";
-import app from '../app';
+import app from '../../app';
 import { mocked } from 'ts-jest/utils'
 
-import IssueServiceImpl from '../service/impl/issue-service-impl';
-import { IIssue } from "../models/issue";
+import IssueServiceImpl from '../../service/impl/issue-service-impl';
+import { IIssue } from "../../models/issue";
 
 describe('Issue Router Unit Test Suite', () => {
     const issueMock = {

@@ -1,5 +1,5 @@
-import IssueStatusValidator from "./issue-status-validator";
-import StatusEnum from "../enums/status-enum";
+import IssueStatusValidator from "../../service/issue-status-validator";
+import StatusEnum from "../../enums/status-enum";
 
 describe('Issue Status Validator Unit Test Suite', () => {
     it('Unknown Status', () => {

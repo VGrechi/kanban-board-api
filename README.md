@@ -21,10 +21,22 @@ Aplicação simples desenvolvida com NodeJS e o superset TypeScript. Contém tes
 - NodeJs + NPM
 [NodeJS](https://nodejs.org/en/download/)
 
+- Docker
+[Docker] (https://docs.docker.com/desktop/)
+
 ## Preparação
 
+### Instalando dependências
+
 1. Acessar a pasta pelo Terminal
-2. Executar: npm install
+2. Executar: *npm install*
+
+### Subindo Banco de Dados
+
+1. Abrir o Terminal
+2. Executar: *docker pull mongo*
+3. Executar: *docker run --publish 27017:27017 --detach --name mongodb mongo*
+4. Para checar se o container está ativo e executando: *docker ps*
 
 ## Execução de Scripts
 

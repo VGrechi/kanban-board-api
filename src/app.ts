@@ -1,5 +1,6 @@
 import express from 'express';
-// import 'reflect-metadata';
+
+import ErrorHandler from './middlewares/error-handler';
 
 import IssueRouter from './routes/issue-router';
 
@@ -9,12 +10,17 @@ class Application {
 
     constructor(){
         this.app =  express();
-        this.setMiddlewares();
+        this.setMiddlewaresBefore();
         this.setRoutes();
+        this.setMiddlewaresAfter();
     }
 
-    setMiddlewares(){
+    setMiddlewaresBefore(){
         this.app.use(express.json());
+    }
+    
+    setMiddlewaresAfter(){
+        this.app.use(ErrorHandler.errorHandler);
     }
 
     setRoutes(){

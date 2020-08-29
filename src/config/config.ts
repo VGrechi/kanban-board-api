@@ -5,4 +5,7 @@ dotenv.config({
     path: process.env.NODE_ENV === "test" ? path.resolve(`${__dirname}/../../.env.test`) : path.resolve(`${__dirname}/../../.env`)
 }); 
 
-export const PROJECT = process.env.PROJECT; 
+export const PROJECT = process.env.PROJECT;
+export function isProduction(): boolean { 
+    return process.env.NODE_ENV == 'production';
+}
