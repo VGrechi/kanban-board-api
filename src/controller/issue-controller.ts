@@ -1,4 +1,4 @@
-import Container, { ContainerInstance, Service } from 'typedi';
+import { ContainerInstance, Service } from 'typedi';
 import { Request, Response, NextFunction } from 'express';
 
 import { IIssue } from '../models/issue';

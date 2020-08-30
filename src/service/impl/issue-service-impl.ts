@@ -1,11 +1,11 @@
 import { Container, Service } from 'typedi';
-import IssueService from '.././issue-service';
 import IssueStatusValidator from '.././issue-status-validator';
 import IssueDao from '../../dao/issue-dao';
 import IssueDaoImpl from '../../dao/issue-dao-impl';
 import StatusEnum from '../../enums/status-enum';
 import { IIssue } from '../../models/issue';
-import { PROJECT } from '../../config/config';
+import { AppEnvs } from '../../config/config';
+import IssueService from '../issue-service';
 
 export default class IssueServiceImpl implements IssueService {
 
@@ -69,9 +69,9 @@ export default class IssueServiceImpl implements IssueService {
         if(key){
             const splited = key.split('-');
             const next = Number(splited[1]) + 1;
-            return `${PROJECT}-${next}`;
+            return `${AppEnvs.PROJECT}-${next}`;
         }else{
-            return `${PROJECT}-1`;
+            return `${AppEnvs.PROJECT}-1`;
         }
     }
 

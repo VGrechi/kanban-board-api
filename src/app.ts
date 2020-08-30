@@ -1,8 +1,12 @@
 import express from 'express';
 
-import ErrorHandler from './middlewares/error-handler';
+import Security from './middlewares/security';
+import helmet from 'helmet';
 
 import IssueRouter from './routes/issue-router';
+import AuthRouter from './routes/auth-router';
+
+import ErrorHandler from './middlewares/error-handler';
 
 class Application {
 
@@ -17,15 +21,19 @@ class Application {
 
     setMiddlewaresBefore(){
         this.app.use(express.json());
+        this.app.use(helmet());
+        this.app.use(Security.checkAuth);
+    }
+    
+    setRoutes(){
+        this.app.use('/auth', AuthRouter);
+        this.app.use('/issues', IssueRouter);
     }
     
     setMiddlewaresAfter(){
         this.app.use(ErrorHandler.errorHandler);
     }
 
-    setRoutes(){
-        this.app.use('/issues', IssueRouter);
-    }
 }
 
 export default new Application().app;

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { isProduction } from '../config/config';
+import { AppEnvs } from '../config/config';
 
 export default class ErrorHandler {
 
@@ -10,7 +10,7 @@ export default class ErrorHandler {
             path: req.url
         };
 
-        if(!isProduction()) error = { ...error, stack: err.stack} 
+        if(!AppEnvs.isProductionEnv()) error = { ...error, stack: err.stack} 
 
         res.status(500);
         res.send(error);
