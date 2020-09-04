@@ -8,7 +8,8 @@
     "test": "jest --no-cache",
     "test:unit": "jest src/specs/unit --no-cache",
     "test:integration": "jest src/specs/integration --runInBand --detectOpenHandles --no-cache",
-    "test:coverage": "jest --no-cache --coverage"
+    "test:coverage": "jest --no-cache --coverage",
+    "sonar": "sonar-scanner -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin"
   },
   "author": "Victor Grechi",
   "license": "ISC",
@@ -37,7 +38,9 @@
     "@types/express-session": "^1.17.0",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^14.0.23",
+    "jest-sonar-reporter": "^2.0.0",
     "mongodb-memory-server-core": "^6.6.4",
+    "sonarqube-scanner": "^2.7.0",
     "ts-node-dev": "^1.0.0-pre.51",
     "typescript": "^3.9.6"
   }
