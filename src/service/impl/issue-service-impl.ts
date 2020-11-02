@@ -62,7 +62,8 @@ export default class IssueServiceImpl implements IssueService {
     }
 
     async getIssueByKey(key: string): Promise<IIssue> {
-        return await this.issueDao.findByKey(key);
+        const issue = await this.issueDao.findByKey(key);
+        return issue;
     }
 
     private getNextKey(key: string | undefined): string {

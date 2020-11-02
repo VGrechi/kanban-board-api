@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
+import { AppConstants } from './envs';
 
 mongoose.connection.on('error',function (err) {  
     console.log('Mongoose default connection error: ' + err);
   });
 
 export const connect = async () => {
-    return mongoose.connect('mongodb://localhost:27017/kanbanboard', 
+    return mongoose.connect(AppConstants.databaseUri, 
     { 
         useNewUrlParser: true,
         useUnifiedTopology: true 

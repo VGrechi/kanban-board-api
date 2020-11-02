@@ -22,7 +22,7 @@ class Application {
     setMiddlewaresBefore(){
         this.app.use(express.json());
         this.app.use(helmet());
-        this.app.use(Security.checkAuth);
+        //this.app.use(Security.checkAuth);
     }
     
     setRoutes(){
