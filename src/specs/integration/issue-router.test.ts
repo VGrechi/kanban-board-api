@@ -1,27 +1,27 @@
 import request from "supertest";
-import DBTestConnection from "./db-test-connection";
+import DBTestManager from "./db-test-manager";
 import app from "../../app";
 import { IIssue } from "../../models/issue";
 import StatusEnum from "../../enums/status-enum";
 
 jest.setTimeout(60 * 1000);
 
-const dbTestConnection = new DBTestConnection();
+const dbTestManager = new DBTestManager();
 
 describe('Issue Router Integration Test Suite', () => {
 
     beforeAll(async (done) => {
-        await dbTestConnection.startTestDatabase();
+        await dbTestManager.startTestDatabase();
         done();
     });
 
     beforeEach(async (done) => {
-        await dbTestConnection.cleanUpTestDatabase();
+        await dbTestManager.cleanUpTestDatabase();
         done();
     });
 
     afterAll(async (done) => {
-        await dbTestConnection.stopTestDatabase();
+        await dbTestManager.stopTestDatabase();
         done();
     });
 
@@ -44,57 +44,52 @@ describe('Issue Router Integration Test Suite', () => {
         let issue: IIssue = postResponse.body;
 
         // Then
-        const getResponse = await request(app).get(`/issues/${issue.key}`);
-        expect(getResponse.status).toBe(200);
-        issue = getResponse.body;   
+        issue = await dbTestManager.findModel('issues', { key: issue.key });
         expect(issue.key).toBe('TEST-1');
         expect(issue.labels?.length).toBe(1);
         expect(issue.labels?.find(l => l.name == 'Bug')).toBeDefined();
+       
         done();
     });
 
     it("[PUT] /issues/{key}", async (done) => {
         // Given
-        const postData = { 
+        await dbTestManager.insertModel('issues', { 
+            key: 'TEST-1',
             title: "Task for test",
             description: "Mock task for test",
             creationDate: new Date(),
+            status: StatusEnum.TO_DO.toString(),
             labels: [
                 { name: 'Bug', priority: 'BLOCKER' },
             ]
-        }
-        const postResponse = await request(app).post('/issues')
-                            .send(postData)
-                            .set('Content-Type', 'application/json');
-        expect(postResponse.status).toBe(201);
-        let issue: IIssue = postResponse.body;
+        });
+
+        let issueModel = await dbTestManager.findModel('issues', { key: 'TEST-1' });
 
         // When
         const putData = {
-            ...issue,
+            ...issueModel,
             status: StatusEnum.IN_PROGRESS.toString(),
             labels: []
         }
-        const putResponse = await request(app).put(`/issues/${issue.key}`)
+        const putResponse = await request(app).put(`/issues/TEST-1`)
                             .send(putData)
                             .set('Content-Type', 'application/json');
         expect(putResponse.status).toBe(204);
 
         // Then
-        const getGesponse = await request(app).get(`/issues/${issue.key}`);
-        expect(getGesponse.status).toBe(200);
-    
-        issue = getGesponse.body;
-    
-        expect(issue.status).toBe(StatusEnum.IN_PROGRESS.toString());
-        expect(issue.labels?.length).toBe(0);
+        issueModel = await dbTestManager.findModel('issues', { key: 'TEST-1' });
+        expect(issueModel.status).toBe(StatusEnum.IN_PROGRESS.toString());
+        expect(issueModel.labels?.length).toBe(0);
+
         done();
     });
     
 
     it("[GET] /issues?title={title}", async () => {
         // Given
-        await dbTestConnection.insertModel('issues', { 
+        await dbTestManager.insertModel('issues', { 
             title: "Task for title test",
             description: "Mock task for test",
             creationDate: new Date(),
@@ -114,7 +109,7 @@ describe('Issue Router Integration Test Suite', () => {
 
     it("[GET] /issues?labelName={labelName}", async () => {
          // Given
-         await dbTestConnection.insertModel('issues', { 
+         await dbTestManager.insertModel('issues', { 
             title: "Task for title test",
             description: "Mock task for test",
             creationDate: new Date(),

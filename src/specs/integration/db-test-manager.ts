@@ -4,7 +4,7 @@ import { connect, disconnect } from '../../config/db-connection';
 import { AppConstants } from '../../config/envs';
 
 
-export default class DBTestConnection {
+export default class DBTestManager {
 
     private COLLECTIONS: String[] = ['issues'];
 
@@ -13,7 +13,7 @@ export default class DBTestConnection {
 
     constructor(){
          this.db = null;
-         this.connection = null;
+         this.connection = {};
     }
 
     async startTestDatabase(){
@@ -36,5 +36,12 @@ export default class DBTestConnection {
         await connect();
         await this.db.collection(collection).insertOne(model);
         await disconnect();
+    }
+
+    async findModel(collection: string, filter: any): Promise<any>{
+        await connect();
+        const model = await this.db.collection(collection).findOne(filter);
+        await disconnect();
+        return model;
     }
 }
